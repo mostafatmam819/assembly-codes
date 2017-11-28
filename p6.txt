@@ -1,0 +1,121 @@
+
+.586
+.MODEL FLAT
+.STACK 4096
+INCLUDE io.h
+
+.DATA
+
+	G1 DWORD ?
+	G2 DWORD ?
+	G3 DWORD ?
+	G4 DWORD ?
+	
+	W1 DWORD ?
+	W2 DWORD ?
+	W3 DWORD ?
+	W4 DWORD ?
+
+	inp BYTE 11 DUP(?)
+
+	takeG1 BYTE "Grade 1 ? : ",0
+	takeG2 BYTE "Grade 2 ? : ",0
+	takeG3 BYTE "Grade 3 ? : ",0
+	takeG4 BYTE "Grade 4 ? : ",0
+
+	takeF1 BYTE "Weight 1 ? : ",0
+	takeF2 BYTE "Weight 2 ? : ",0
+	takeF3 BYTE "Weight 3 ? : ",0
+	takeF4 BYTE "Weight 4 ? : ",0
+
+	weightedSum BYTE 11 DUP(?),0
+	sumOfWeights BYTE 11 DUP(?),0
+	weightedAverage BYTE 11 DUP(?),0
+	remainderWeightedAverage BYTE 11 DUP(?),0
+
+	tit BYTE "Problem 5 Sheet 2",0
+
+.CODE
+
+MainProc PROC
+
+	input takeG1,inp,11
+	atod inp
+	mov G1,eax
+
+	input takeF1,inp,11
+	atod inp
+	mov W1,eax
+
+	input takeG2,inp,11
+	atod inp
+	mov G2,eax
+
+	input takeF2,inp,11
+	atod inp
+	mov W2,eax
+
+	input takeG3,inp,11
+	atod inp
+	mov G3,eax
+
+	input takeF3,inp,11
+	atod inp
+	mov W3,eax
+
+	input takeG4,inp,11
+	atod inp
+	mov G4,eax
+
+	input takeF4,inp,11
+	atod inp
+	mov W4,eax
+
+	mov ebx,G1
+	imul ebx,W1
+	mov eax,ebx
+
+	mov ebx,G2
+	imul ebx,W2
+	add eax,ebx
+
+	mov ebx,G3
+	imul ebx,W3
+	add eax,ebx
+
+	mov ebx,G4
+	imul ebx,W4
+	add eax,ebx
+
+	mov ebx,W1
+	add ebx,W2
+	add ebx,W3
+	add ebx,W4
+
+	dtoa weightedSum,eax
+	output tit,weightedSum
+
+	
+	dtoa sumOfWeights,ebx
+	output tit,sumOfWeights
+
+	atod sumOfWeights
+	mov ecx,eax
+	atod weightedSum
+	mov edx,0
+	div ecx
+
+	dtoa weightedAverage,eax
+	output tit,weightedAverage
+
+
+	dtoa remainderWeightedAverage,edx
+	output tit,remainderWeightedAverage
+
+
+	mov eax, 0
+	ret
+
+MainProc ENDP
+
+END
