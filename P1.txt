@@ -1,0 +1,40 @@
+.586
+.MODEL FLAT
+INCLUDE io.h
+.STACK 4096
+.DATA
+prompt1 BYTE "Enter x: ",0
+prompt2 BYTE "Enter y: ",0
+prompt3 BYTE "Enter z: ",0
+x DD ?
+y DD ?
+z DD ?
+temp DD ?
+string	BYTE 40 DUP (?)
+res		BYTE 11 DUP (?),0
+cc BYTE " ", 0
+
+.CODE
+MainProc PROC
+input prompt1,string,40
+atod string
+mov x,eax
+input prompt2,string,40
+atod string
+mov y,eax
+add eax,x
+mov temp,eax
+input prompt3,string,40
+atod string
+mov z,eax
+imul eax,2
+sub temp,eax
+inc temp
+neg temp
+dtoa res, temp
+output cc,res
+
+mov eax,0
+ret
+MainProc ENDP
+END

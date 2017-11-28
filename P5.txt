@@ -1,0 +1,86 @@
+.586
+.MODEL FLAT
+INCLUDE io.h
+.STACK 4096
+.DATA
+
+penn DD ?
+nick DD ?
+dim DD ?
+quart DD ?
+dollar DD ?
+temp DD ?
+
+prompt1 BYTE "Enter the nunmber of pennes: ",0
+prompt2 BYTE "Enter the nunmber of nickels: ",0
+prompt3 BYTE "Enter the nunmber of dimes: ",0
+prompt4 BYTE "Enter the nunmber of quarters: ",0
+prompt5 BYTE "Enter the nunmber of dollar: ",0
+
+msg1 BYTE "the Total value of coins is: ",0
+msg2 BYTE "the Total number of coins is: ",0
+
+string BYTE 40 DUP (?)
+res1 BYTE 11 DUP (?)
+r BYTE " Dollar and"
+res2 BYTE 11 DUP (?)
+rr BYTE " Cents",0
+res3 BYTE 11 DUP (?)
+rrr BYTE " Coins",0
+
+divisor DD 100
+.CODE
+
+MainProc PROC
+input prompt1,string,40
+atod string
+mov penn,eax
+mov temp,eax
+imul eax,7
+mov ebx,eax
+
+input prompt2,string,40
+atod string
+mov nick,eax
+add temp,eax
+imul eax,5
+add ebx,eax
+
+input prompt3,string,40
+atod string
+mov dim,eax
+add temp,eax
+imul eax,10
+add ebx,eax
+
+input prompt4,string,40
+atod string
+mov quart,eax
+add temp,eax
+imul eax,25
+add ebx,eax
+
+input prompt5,string,40
+atod string
+mov dollar,eax
+add temp,eax
+imul eax,100
+add ebx,eax
+add ebx,50
+
+mov eax,ebx
+mov edx,0
+cdq
+
+idiv divisor
+dtoa res1,eax
+dtoa res2,edx
+output msg1,res1
+
+add temp,50
+dtoa res3,temp
+output msg2,res3
+mov eax,0
+ret
+MainProc ENDP
+END
